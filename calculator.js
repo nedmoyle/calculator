@@ -22,8 +22,16 @@ function divide (a, b) {
 let firstNumber;
 let secondNumber;
 let operator;
+let clearNumber = false;
+let operatorSet = false;
+
+console.log(operator);
 
 function operate(a, b, oper) {
+    a = Number(a);
+    b = Number(b);
+    
+    
     if (oper === '+') {
         return add(a, b);
 
@@ -53,17 +61,53 @@ numberButtons.forEach((btn) => {
     btn.addEventListener('click', function () {appendDisplay(btn.textContent)})
 });
 
-// const btnOne = document.querySelector('#one');
-// btnOne.addEventListener('click', function () {appendDisplay('1')});
+const btnAdd = document.querySelector('#add');
+btnAdd.addEventListener('click', function () {
+    
+    operator = btnAdd.textContent; // takes button text and assigns it to be the operator
+    clearNumber = true;
+
+    if (operatorSet === true) {
+        secondNumber = displayText.textContent;
+        displayText.textContent = operate(firstNumber, secondNumber, operator);
+
+        firstNumber = displayText.textContent;
+    } else {
+    
+    firstNumber = displayText.textContent;
+    btnAdd.style.backgroundColor = 'red';
+    console.log(firstNumber);
+    
+    operatorSet = true;
+    }
+});
+
+const btnEquals = document.querySelector('#equals');
+btnEquals.addEventListener('click', function () {
+    secondNumber = displayText.textContent;
+    displayText.textContent = operate(firstNumber, secondNumber, operator);
+    operatorSet === false;
+})
+
+
 
 function clear() {
-    displayText.textContent = 'Cleared';
+    displayText.textContent = '0';
 };
 
 function appendDisplay(value) {
-    if (displayText.textContent === 'Cleared') {
+    
+    if (displayText.textContent === '0' && clearNumber === false) {
         displayText.textContent = value;
+
     } else {
-    displayText.textContent += value;
+        displayText.textContent += value;
     }
+    
+    if (clearNumber === true) {
+        displayText.textContent = value;
+        clearNumber = false;    
+    } 
+    
+    
 }
