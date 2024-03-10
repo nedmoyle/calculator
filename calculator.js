@@ -11,7 +11,11 @@ function multiply (a, b) {
 };
 
 function divide (a, b) {
-    return a/b;
+    if (b === 0) {
+        return "ERROR DIV 0";
+    } else {
+        return a/b;
+    }
 };
 
 // console.log(add(2, 2)); checks calculator functions work
@@ -22,10 +26,12 @@ function divide (a, b) {
 let firstNumber;
 let secondNumber;
 let operator;
+let previousOperator;
 let clearNumber = false;
 let operatorSet = false;
+let chain = false;
 
-console.log(operator);
+// console.log(operator);
 
 function operate(a, b, oper) {
     a = Number(a);
@@ -61,38 +67,71 @@ numberButtons.forEach((btn) => {
     btn.addEventListener('click', function () {appendDisplay(btn.textContent)})
 });
 
-const btnAdd = document.querySelector('#add');
-btnAdd.addEventListener('click', function () {
-    
-    operator = btnAdd.textContent; // takes button text and assigns it to be the operator
-    clearNumber = true;
+const operatorButtons = document.querySelectorAll('.operators'); 
 
-    if (operatorSet === true) {
-        secondNumber = displayText.textContent;
-        displayText.textContent = operate(firstNumber, secondNumber, operator);
+operatorButtons.forEach((btn) => {
+    btn.addEventListener('click', function () {  
+        
 
-        firstNumber = displayText.textContent;
-    } else {
-    
-    firstNumber = displayText.textContent;
-    btnAdd.style.backgroundColor = 'red';
-    console.log(firstNumber);
-    
-    operatorSet = true;
-    }
+
+        
+        clearNumber = true;
+
+        if (operatorSet === true && chain === false) { // section for second number entered
+            btn.style.backgroundColor = 'blue';
+            secondNumber = displayText.textContent;
+            displayText.textContent = operate(firstNumber, secondNumber, operator); 
+            firstNumber = displayText.textContent;
+            // operatorSet = false;
+            previousOperator = btn.textContent;
+            chain = true;
+
+        } else if (operatorSet === true && chain === true) { /// section for all chained maths
+            btn.style.backgroundColor = 'green';
+            secondNumber = displayText.textContent;
+            displayText.textContent = operate(firstNumber, secondNumber, previousOperator);
+            firstNumber = displayText.textContent;
+            previousOperator = btn.textContent;
+            chain = true;
+
+        } else { // this section is for the first number entered //
+            operator = btn.textContent; // takes button text and assigns it to be the operator
+            firstNumber = displayText.textContent;
+            btn.style.backgroundColor = 'red';
+            console.log(firstNumber);
+        
+            operatorSet = true;
+        }
+    })
 });
 
 const btnEquals = document.querySelector('#equals');
 btnEquals.addEventListener('click', function () {
+    
     secondNumber = displayText.textContent;
-    displayText.textContent = operate(firstNumber, secondNumber, operator);
-    operatorSet === false;
-})
+    
+    if (chain === true) {
+        displayText.textContent = operate(firstNumber, secondNumber, previousOperator);
+        chain = false;
+        firstNumber = displayText.textContent;
+        console.log("youre in the chain of equals")
+        // operatorSet = false;
+    } else {
+        displayText.textContent = operate(firstNumber, secondNumber, operator);
+        firstNumber = displayText.textContent;
+        console.log("youre in the non chain of equals")
+    }
+    operatorSet = false;
+});
 
 
 
 function clear() {
     displayText.textContent = '0';
+    firstNumber = undefined;
+    secondNumber = undefined;
+    chain = false;
+    operatorSet = false;
 };
 
 function appendDisplay(value) {
