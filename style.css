@@ -4,7 +4,6 @@ html {
     font-family: monospace;
 }
     
-    
 #calc {
     display: flex;
     justify-content: center;
@@ -14,11 +13,12 @@ html {
     background-color: azure;
 }
 
-.container {
+#container {
     background-color: black;
-    border: 10px solid black;
+    border: 10px solid rgb(59, 59, 59);
     gap: 2px;
 }
+
 .row {
     display: flex;
     height: 15vh;
@@ -34,11 +34,11 @@ button {
 }
 
 #zero {
-    flex: 2;
+    flex: 1;
 }
 
 #display {
-    background-color: bisque;
+    background-color: rgb(150, 150, 150);
     font-size: 5em;
     display: flex;
     flex-direction: column;
@@ -49,9 +49,57 @@ button {
 }
 
 .numbers {
-    background-color: #217C7E;
+    background-color: #237172;
 }
 
 .numbers:active {
     background-color: #33b9bb;
+}
+
+.operators {
+    background-color: #9c6631;
+}
+
+.operators:focus {
+    background-color: #d48c44;
+}
+
+#equals {
+    background-color:rgb(189, 94, 59)
+}
+
+#equals:active {
+    background-color: coral;
+}
+
+#clear {
+    background-color:rgb(80, 66, 160)
+}
+
+#clear:active {
+    background-color: rgb(115, 113, 218);
+}
+
+#sign {
+    background-color:rgb(80, 66, 160)
+}
+
+#sign:active {
+    background-color: rgb(115, 113, 218);
+}
+
+#percentage {
+    background-color:rgb(80, 66, 160)
+}
+
+#percentage:active {
+    background-color: rgb(115, 113, 218);
+}
+
+#decimal {
+    background-color:rgb(80, 66, 160)
+}
+
+#decimal:active {
+    background-color: rgb(115, 113, 218);
 }
